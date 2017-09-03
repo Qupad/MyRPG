@@ -12,7 +12,7 @@ class Ivent {
     Character character = new Character();
     Inventory inventory = new Inventory();
     Scanner sc = new Scanner(System.in);
-    int choice;
+    String choice;
     private int position;
 
     void position(int position){
@@ -30,15 +30,15 @@ class Ivent {
         if(position == 1) {
             if (quest.mushroomQ) {
                 System.out.println("1-Search for some mushrooms\n2-Do other stuff");
-                choice = sc.nextInt();
-                if (choice == 1) {
+                choice = sc.next();
+                if (choice.equals("1")) {
                     System.out.println("U found one mushroom!");
                     inventory.add("Mushroom");
                 }
             } else {
                 if (((int) (Math.random() * 2)) == 1) {
                     System.out.println("Unicorn has being appeared!");
-                    iventUnicorn();
+                    iventEnemy("Unicorn");
                 } else if (((int) (Math.random() * 2)) == 0)
                     System.out.println("The band of rogue walk near u. Tshhh.");
                 else
@@ -46,8 +46,10 @@ class Ivent {
             }
         }
         if(position == 0){
-            if(((int)(Math.random()*2)) == 1)
+            if(((int)(Math.random()*2)) == 1) {
                 System.out.println("Dragon!");
+                iventEnemy("Dragon");
+            }
             else if (((int)(Math.random()*2)) == 0)
                 System.out.println("Not a dragon.");
         }
@@ -56,24 +58,26 @@ class Ivent {
             iventCity();
         }
     }
-    private void iventUnicorn(){
+
+    private void iventEnemy(String enemy) {
         System.out.println("1-Kill\n2-Pass");
-        choice = sc.nextInt();
-        if (choice == 1){
-            character.Unicorn();
+        choice = sc.next();
+        if (choice.equals("1")){
+            character.enemy(enemy);
             character.fight();
-        } else if (choice == 2){
-            System.out.println("U successfully passed unicorn");
+        } else if (choice.equals("2")){
+            System.out.println("U successfully passed "+enemy);
         } else{
-            iventUnicorn();
+            iventEnemy(enemy);
         }
     }
+
     private void iventCity(){
         System.out.println("1-Buy stuff\n2-Talk with citizens\n3-Get out from the city");
-        choice = sc.nextInt();
-        if (choice == 1){
+        choice = sc.next();
+        if (choice.equals("1")){
             shop();
-        }else if (choice == 2){
+        }else if (choice.equals("2")){
             quest.MushroomQuest();
         }else
             System.out.println("Out");
@@ -81,8 +85,8 @@ class Ivent {
     void shop(){
         System.out.println("Welcome to \"Treasure & Shit\"\nLook at my stuff."+
         "\n1-Sword(10)\n2-Exit");
-        choice = sc.nextInt();
-        if(choice == 1){
+        choice = sc.next();
+        if(choice.equals("1")){
             if(Inventory.money >= 10) {
                 Inventory.Inventory.add("Sword");
                 inventory.money -= 10;
@@ -94,7 +98,7 @@ class Ivent {
                 shop();
             }
         }
-        else if(choice == 2){}
+        else if(choice.equals("2")){}
         else{
             System.out.println("I don't have that");
             shop();

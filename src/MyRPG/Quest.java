@@ -7,7 +7,7 @@ class Quest {
     boolean mushroomQ = false;
     void MushroomQuest(){
         if (Inventory.Inventory.contains("Mushroom")) {
-            System.out.println("Oh ma yeee, thx to u young man. This is urs.");
+            System.out.println("Oh ma, yeee, thx to u young man. This is urs.");
             Inventory.Inventory.remove("Mushroom");
             Inventory.Inventory.add("Mushroom's elixir");
             Inventory.money += 10;

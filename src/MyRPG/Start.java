@@ -9,11 +9,14 @@ public class Start {
         Map map = new Map();
         Ivent ivent = new Ivent();
         Inventory inventory = new Inventory();
+        Character character = new Character();
         Scanner sc = new Scanner(System.in);
         map.setMap((int)(Math.random()*map.map.length),(int)(Math.random()*map.map.length));
         map.randomize();
         inventory.add("Map");
         inventory.add("Cocaine");
+        inventory.add("Sword");
+        character.mainCharacter();
         while (true) {
             Boolean n = false,w = false,e = false,s = false, wall = false;
             map.print();
