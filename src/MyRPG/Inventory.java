@@ -18,65 +18,48 @@ class Inventory {
     static boolean unequip = false;
 
     void InventoryMenu(){
+        System.out.println("\n\tHP: " + character.hp + "\t\tAttack damage: " + character.mcattack + "\t\tMoney: " + money);
         if (Inventory.isEmpty()) {
-            System.out.println("Empty\nMoney: "+money);
+            System.out.println("Empty");
         } else {
             for (int i = 0; i < Inventory.size(); i++)
                 System.out.print(i + 1 + "-" + Inventory.get(i) + " ");
-            System.out.println("\n\tHP: " + character.hp + "\t\tAttack damage: " + character.mcattack + "\t\tMoney: " + money + "\n1-Use item\n2-Drop item\n3-Equip\n4-Unequip\n5-Close backpack");
-            choice = sc.next();
-            if (choice.equals("1")) {
-                System.out.println("Write number of item that u want to use");
-                try {
-                    number = sc.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Write decimal");
-                    InventoryMenu();
-                }
-                useItem(number - 1);
-            } else if (choice.equals("2")) {
-                System.out.println("Write number of item that u want to drop");
-                try {
-                    number = sc.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Write decimal");
-                    InventoryMenu();
-                }
-                dropItem(number - 1);
-            } else if (choice.equals("3")) {
-                System.out.println("Write number of item that u want to equip");
-                try {
-                    number = sc.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Write decimal");
-                    InventoryMenu();
-                }
-                equip(Inventory.get(number - 1));
-            }else if(choice.equals("4")){
-                System.out.println("Write number of item that u want to unequip");
-                try {
-                    number = sc.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Write decimal");
-                    InventoryMenu();
-                }
-                unequip = true;
-                equip(Inventory.get(number - 1));
-            }else if(choice.equals("5")){
-            }else
+            System.out.println("\n1-Use item\n2-Drop item\n3-Equip\n4-Unequip\n5-Close backpack");
+            try {
+                number = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Write decimal");
+                sc.next();
                 InventoryMenu();
+            }
+            if(number >= 1 && number <= 4) {
+                System.out.print("Write number of item that u want to ");
+                switch (number) {
+                    case 1: System.out.println("use"); useItem(); break;
+                    case 2: System.out.println("drop"); dropItem(); break;
+                    case 3: System.out.println("equip"); equip(); break;
+                    case 4: System.out.println("unequip"); unequip = true; equip(); break;
+                }
+            }
         }
     }
     void add(String stuff){
-
         Inventory.add(stuff);
     }
-    void useItem(int itemNumb){
-        if(itemNumb > Inventory.size() || itemNumb < 0){
+    void useItem(){
+        try {
+            number = sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Write decimal");
+            InventoryMenu();
+        }
+        number -= 1;
+        if(number > Inventory.size() || number < 0){
             System.out.println("Wrong number");
+            sc.next();
             InventoryMenu();
         }else {
-            String item = Inventory.get(itemNumb);
+            String item = Inventory.get(number);
             if(item.equals("Mushroom")||item.equals("Weed")){
                 System.out.println("Shit, that's good");
                 character.hp += 50;
@@ -96,12 +79,19 @@ class Inventory {
         }
 
     }
-    void dropItem(int itemNumb){
-        if(itemNumb >= Inventory.size() || itemNumb < 0){
+    void dropItem(){
+        try {
+            number = sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Write decimal");
+            InventoryMenu();
+        }
+        number -= 1;
+        if(number >= Inventory.size() || number < 0){
             System.out.println("Wrong number");
             InventoryMenu();
         } else {
-            String item = Inventory.get(itemNumb);
+            String item = Inventory.get(number);
             System.out.println("Drop "+ item+"?\n1-Yes\n2-No");
             choice = sc.next();
             if(choice.equals("1")){
@@ -111,11 +101,18 @@ class Inventory {
                 InventoryMenu();
             else {
                 System.out.println("Wrong answer");
-                dropItem(itemNumb);
+                InventoryMenu();
             }
         }
     }
-    void equip(String item){
+    void equip(){
+        try {
+            number = sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Write decimal");
+            InventoryMenu();
+        }
+        String item = Inventory.get(number - 1);
         if(item.equals("Sword")){
             if(unequip) {
                 items.equipment(item);
